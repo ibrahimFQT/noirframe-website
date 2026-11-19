@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE STORY - NOIRFRAME</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* === CSS VARIABLES & THEME === */
+        :root {
+            --pink: #FF2A6D;
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --text-muted: #666666;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --nav-bg: #ffffff;
+            --nav-text: #000000;
+        }
+
+        body.dark-mode {
+            --bg-color: #0a0a0a;
+            --text-color: #f0f0f0;
+            --text-muted: #999999;
+            --glass-bg: rgba(20, 20, 20, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --nav-bg: #1a1a1a;
+            --nav-text: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* === DYNAMIC ISLAND NAVBAR === */
+        #dynamicNavbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--nav-bg);
+            border-radius: 50px;
+            height: 70px;
+            width: 90%;
+            max-width: 1000px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid var(--glass-border);
+        }
+
+        #dynamicNavbar.collapsed { width: 110px; height: 55px; cursor: pointer; }
+        
+        .nav-expanded { display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0 40px; transition: opacity 0.2s ease, visibility 0.2s; }
+        .nav-side { display: flex; gap: 30px; }
+        #dynamicNavbar .nav-link { font-family: 'Anton', sans-serif; font-size: 1.2rem; color: var(--nav-text); text-decoration: none; letter-spacing: 1px; transition: color 0.3s; }
+        #dynamicNavbar .nav-link:hover, #dynamicNavbar .nav-link.active { color: var(--pink); }
+        #dynamicNavbar .logo-text { font-family: 'UnifrakturMaguntia', cursive; font-size: 2.8rem; color: var(--nav-text); text-decoration: none; line-height: 1; margin-top: 5px; }
+
+        .nav-collapsed { position: absolute; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
+        #dynamicNavbar.collapsed .nav-expanded { opacity: 0; visibility: hidden; }
+        #dynamicNavbar.collapsed .nav-collapsed { opacity: 1; visibility: visible; }
+        
+        .sparkle-container { position: relative; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; }
+        .sparkle-icon { width: 24px; height: 24px; transition: transform 0.1s ease-out; }
+
+        /* === FLOATING ACTIONS (CART & THEME) === */
+        .floating-actions { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 15px; z-index: 999; align-items: center; }
+        .cart-btn, .theme-btn {
+            width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cart-btn:hover, .theme-btn:hover { transform: scale(1.1); }
+        .cart-btn { background-color: var(--pink); color: white; font-size: 1.8rem; position: relative; }
+        .cart-badge {
+            position: absolute; top: -5px; right: -5px; background: #111; color: white; font-family: 'Anton', sans-serif; font-size: 1rem;
+            width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 3px solid var(--bg-color); transition: border-color 0.3s;
+        }
+        .theme-btn { background-color: #111; color: white; font-size: 1.8rem; }
+        body.dark-mode .theme-btn { background-color: #fff; color: #111; }
+
+        /* === PAGE CONTENT STYLES === */
+        .about-page-wrapper { position: relative; z-index: 1; padding-top: 220px; padding-bottom: 0px; }
+        .about-hero { text-align: center; padding: 0 20px 80px; }
+        .about-hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(3rem, 7vw, 5.5rem); margin: 0 0 20px; line-height: 1.1; color: var(--text-color); }
+        .about-hero .highlight-text { color: var(--pink); }
+        
+        .founders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 30px; padding: 0 20px; }
+        .founder-card { height: 380px; background: var(--glass-bg); border-radius: 35px; border: 1.5px solid var(--glass-border); display: flex; align-items: flex-end; padding: 25px; transition: transform 0.3s; box-shadow: var(--shadow); }
+        .founder-card:hover { transform: translateY(-10px); border-color: var(--pink); }
+        .founder-card h3 { font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0; color: var(--text-color); }
+        .founder-card h4 { color: var(--pink); font-size: 0.9rem; margin: 5px 0 10px; font-weight: bold; }
+
+        /* === FUN STATS SECTION (ANIMATED NUMBERS) === */
+        .fun-stats-container { max-width: 1200px; margin: 80px auto 0; padding: 0 20px; text-align: center; }
+        .fun-stats-container h2 { font-family: 'Anton', sans-serif; font-size: 2.5rem; margin-bottom: 40px; color: var(--text-color); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .stat-box { padding: 40px 20px; background: var(--glass-bg); border: 1px dashed var(--glass-border); border-radius: 30px; box-shadow: var(--shadow); transition: transform 0.3s; }
+        .stat-box:hover { transform: translateY(-5px); border-color: var(--pink); }
+        .stat-box h3 { font-family: 'Anton', sans-serif; font-size: 3.5rem; color: var(--pink); margin: 0; }
+        .stat-box p { font-size: 1rem; font-weight: 600; color: var(--text-muted); margin: 10px 0 0; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* === MINIGAME: RENDER SIMULATOR === */
+        .minigame-container { max-width: 800px; margin: 80px auto 0; padding: 0 20px; text-align: center; }
+        .minigame-container h2 { font-family: 'Anton', sans-serif; font-size: 2.5rem; margin-bottom: 10px; color: var(--text-color); }
+        .minigame-container p { color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6; }
+        .game-box { background: var(--glass-bg); border: 1.5px solid var(--glass-border); border-radius: 35px; padding: 40px; box-shadow: var(--shadow); backdrop-filter: blur(20px); }
+        .timer-display { font-family: 'Anton', sans-serif; font-size: 2.5rem; color: var(--pink); margin-bottom: 20px; }
+        .progress-bar-bg { width: 100%; height: 30px; background: rgba(0,0,0,0.1); border-radius: 15px; overflow: hidden; margin-bottom: 30px; border: 1px solid var(--glass-border); }
+        body.dark-mode .progress-bar-bg { background: rgba(255,255,255,0.1); }
+        .progress-bar-fill { height: 100%; width: 0%; background: var(--pink); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-family: 'Anton', sans-serif; transition: width 0.1s linear; }
+        .render-btn { background: var(--text-color); color: var(--bg-color); border: none; padding: 15px 40px; font-family: 'Anton', sans-serif; font-size: 1.5rem; border-radius: 50px; cursor: pointer; transition: transform 0.1s, background 0.3s; width: 100%; max-width: 300px; user-select: none; }
+        .render-btn:active { transform: scale(0.9); background: var(--pink); color: white; }
+        .game-result { margin-top: 20px; font-weight: bold; font-size: 1.2rem; min-height: 30px; text-transform: uppercase; font-family: 'Anton', sans-serif; letter-spacing: 1px; }
+
+        /* === MARQUEE RUNNING TEXT === */
+        .marquee-container { width: 100%; overflow: hidden; background: var(--text-color); color: var(--bg-color); padding: 15px 0; margin-top: 80px; display: flex; align-items: center; }
+        .marquee-text { font-family: 'Anton', sans-serif; font-size: 1.5rem; letter-spacing: 2px; white-space: nowrap; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* === CART SIDEBAR POP-UP === */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; opacity: 0; visibility: hidden; transition: 0.3s ease; }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 100%; max-width: 400px; height: 100vh; background: #EFEFEF; z-index: 10001; display: flex; flex-direction: column; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
+        .cart-sidebar.active { right: 0; }
+        body.dark-mode .cart-sidebar { background: #1a1a1a; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 25px 30px; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        body.dark-mode .cart-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .cart-header h2 { font-family: 'Anton', sans-serif; font-size: 2rem; margin: 0; letter-spacing: 1px; color: var(--text-color);}
+        .close-cart { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-color); font-weight: bold;}
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px 30px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;}
+        .cart-item-info h4 { margin: 0 0 5px; font-family: 'Anton', sans-serif; font-size: 1.1rem; color: var(--text-color);}
+        .cart-item-price { color: var(--pink); font-weight: 600;}
+        .empty-cart-msg { text-align: center; color: var(--text-muted); margin-top: 50px; font-style: italic; }
+        .cart-footer { background: var(--bg-color); padding: 25px 30px; border-top: 1px solid var(--glass-border); }
+        .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .cart-total-row span { font-family: 'Anton', sans-serif; font-size: 1.5rem; color: var(--text-color);}
+        .checkout-btn { width: 100%; padding: 18px; background: var(--pink); color: white; border: none; border-radius: 50px; font-family: 'Anton', sans-serif; font-size: 1.2rem; cursor: pointer; letter-spacing: 1px; transition: background 0.3s; }
+        .checkout-btn:hover { background: #d91c5c; }
+
+        /* === FOOTER BOTTOM BAR === */
+        footer { padding: 60px 20px; border-top: 1px solid var(--glass-border); background: var(--bg-color); position: relative; z-index: 2; margin-top: 0; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+        .footer-content p { color: var(--text-muted); font-size: 1rem; margin: 0; font-weight: 500;}
+        .socials { display: flex; gap: 10px; }
+        .socials a { color: var(--text-color); text-decoration: none; margin-left: 20px; font-family: 'Anton', sans-serif; font-size: 1.2rem; letter-spacing: 1px; transition: 0.3s; }
+        .socials a:hover { color: var(--pink); transform: translateY(-2px); }
+
+        @media (max-width: 768px) {
+            #dynamicNavbar { padding: 0 15px; width: 95%; height: 60px; }
+            .nav-side { display: none; }
+            #dynamicNavbar .logo-text { font-size: 2.2rem; }
+            .floating-actions { bottom: 20px; right: 20px; gap: 10px; }
+            .cart-btn, .theme-btn { width: 50px; height: 50px; font-size: 1.5rem; }
+            .about-page-wrapper { padding-top: 150px; }
+            .stat-box h3 { font-size: 2.8rem; }
+            
+            /* Responsive Footer */
+            .footer-content { flex-direction: column; text-align: center; }
+            .socials a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DYNAMIC ISLAND NAVBAR -->
+    <nav id="dynamicNavbar">
+        <div class="nav-expanded">
+            <div class="nav-side left">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="shop.html" class="nav-link">SHOP</a>
+            </div>
+            <a href="index.html" class="logo-text">noirframe</a>
+            <div class="nav-side right">
+                <a href="about.html" class="nav-link active">ABOUT</a>
+                <a href="contact.html" class="nav-link">CONTACT</a> 
+            </div>
+        </div>
+        <!-- COLLAPSED SPARKLE -->
+        <div class="nav-collapsed">
+            <div class="sparkle-container">
+                <svg class="sparkle-icon" id="trackingSparkle" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FF2A6D"/>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FLOATING CART & THEME BUTTONS -->
+    <div class="floating-actions">
+        <button class="cart-btn" onclick="openCart()">
+            <i class="ph ph-shopping-cart"></i>
+            <span class="cart-badge" id="cartCount">0</span>
+        </button>
+        <button class="theme-btn" id="themeToggle">
+            <i class="ph ph-sun" id="themeIcon"></i>
+        </button>
+    </div>
+
+    <!-- CART SIDEBAR POP-UP -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>YOUR CART</h2>
+            <button class="close-cart" onclick="closeCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Item dirender via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cartTotalPrice">Rp 0</span>
+            </div>
+            <button class="checkout-btn">CHECKOUT (WHATSAPP)</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="about-page-wrapper">
+        <header class="about-hero">
+            <h1>HOW 4 HIGHSCHOOLERS <br><span class="highlight-text">STARTED A CULT</span></h1>
+            <p style="max-width: 700px; margin: 0 auto; line-height: 1.7; color: var(--text-muted); font-size: 1.1rem;">
+                Berawal dari tugas akhir sekolah, kurang tidur karena *tryout*, dan ambisi yang terlalu besar untuk ukuran siswi kelas 12. Di tengah tumpukan buku ujian, 4 remaja ini menghabiskan ribuan jam menatap layar dan menulis barisan kode. Kini kami adalah NOIRFRAME, studio desain visual yang mendobrak batas estetika konvensional.
+            </p>
+        </header>
+
+        <!-- CARDS FOUNDERS -->
+        <div class="founders-grid">
+            <div class="founder-card">
+                <div>
+                    <h3>Shafiyyah</h3>
+                    <h4>DESIGNER</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Mengubah stres ujian dan kafein menjadi barisan kode interaktif tanpa celah bug.</p>
+                </div>
+            </div>
+            <div class="founder-card">
+                <div>
+                    <h3>Hanifah M</h3>
+                    <h4>THE THINKER</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Perfeksionis estetika, bisa nangis kalau jarak margin meleset 1 pixel saat di-*review* guru.</p>
+                </div>
+            </div>
+            <div class="founder-card">
+                <div>
+                    <h3>Nazyla A</h3>
+                    <h4>THE REMINDER</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Arsitek di balik kenyamanan navigasi, memastikan user betah scrolling dari awal masuk.</p>
+                </div>
+            </div>
+            <div class="founder-card">
+                <div>
+                    <h3>UNKNOWN 4</h3>
+                    <h4>THE VISUAL ARTIST</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Seniman grafis yang ngurusin semua aset visual biar noirframe selalu tampil beda dan *edgy*.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: ANIMATED FUN STATS SECTION -->
+        <div class="fun-stats-container">
+            <h2>NOIRFRAME IN NUMBERS</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h3 class="counter" data-target="15400">0</h3>
+                    <p>Eksemplar Terjual</p>
+                </div>
+                <div class="stat-box">
+                    <h3 class="counter" data-target="150">0</h3>
+                    <p>Klien Bahagia</p>
+                </div>
+                <div class="stat-box">
+                    <h3 class="counter" data-target="404">0</h3>
+                    <p>Gelas Kopi</p>
+                </div>
+                <div class="stat-box">
+                    <h3 class="counter" data-target="99">0</h3>
+                    <p>Bug Dibasmi</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: MINIGAME RENDER SIMULATOR -->
+        <div class="minigame-container">
+            <h2>RENDER SIMULATOR 🎮</h2>
+            <p>Klien VIP minta revisi warna 10 menit sebelum tayang. <br>Bantu <strong>Spam Klik</strong> tombol RENDER secepat mungkin sebelum waktu habis!</p>
+            <div class="game-box">
+                <div class="timer-display">Sisa Waktu: <span id="time-left">10</span>s</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="render-progress">0%</div>
+                </div>
+                <button class="render-btn" id="renderBtn">RENDER!</button>
+                <div class="game-result" id="gameResult"></div>
+            </div>
+        </div>
+
+        <!-- MARQUEE RUNNING TEXT -->
+        <div class="marquee-container">
+            <div class="marquee-text">
+                ✦ NOIRFRAME STUDIO ✦ WE DON'T JUST DESIGN, WE ENGINEER VIBES ✦ SLEEP IS FOR THE WEAK ✦ NOIRFRAME STUDIO ✦ WE DON'T JUST DESIGN, WE ENGINEER VIBES ✦ SLEEP IS FOR THE WEAK ✦
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- FOOTER BOTTOM BAR -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 NOIRFRAME. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#">INSTAGRAM</a>
+                <a href="#">BEHANCE</a>
+                <a href="#">WHATSAPP</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- CART SIDEBAR LOGIC ---
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalPrice = document.getElementById('cartTotalPrice');
+        const cartCountBadge = document.getElementById('cartCount');
+
+        function openCart() {
+            cartOverlay.classList.add('active');
+            cartSidebar.classList.add('active');
+            renderCartSidebar();
+        }
+
+        function closeCart() {
+            cartOverlay.classList.remove('active');
+            cartSidebar.classList.remove('active');
+        }
+
+        cartOverlay.addEventListener('click', closeCart);
+
+        function updateCartBadge() {
+            try {
+                const cartData = JSON.parse(localStorage.getItem('cart') || '[]');
+                cartCountBadge.innerText = cartData.length;
+            } catch (e) { console.error(e); }
+        }
+
+        function renderCartSidebar() {
+            const cartData = JSON.parse(localStorage.getItem('cart') || '[]');
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            if (cartData.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Keranjang belanja kamu masih kosong.</div>';
+            } else {
+                cartData.forEach(item => {
+                    const qty = item.quantity || 1;
+                    total += item.price * qty;
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <div class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')} x ${qty}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            cartTotalPrice.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Sync cart dari localStorage
+            updateCartBadge();
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'cart') { updateCartBadge(); if(cartSidebar.classList.contains('active')) renderCartSidebar(); }
+            });
+
+            // --- ANIMATED NUMBER COUNTERS LOGIC ---
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0;
+                        const updateCount = () => {
+                            // Hitung pembagi buat nentuin kecepatan animasi
+                            const inc = target / 40;
+                            if (count < target) {
+                                count += inc;
+                                counter.innerText = Math.ceil(count) + (target > 1000 ? '+' : '');
+                                setTimeout(updateCount, 40);
+                            } else {
+                                counter.innerText = target + '+';
+                            }
+                        };
+                        updateCount();
+                        observer.unobserve(counter); // Jalanin sekali aja
+                    }
+                });
+            }, { threshold: 0.5 });
+            counters.forEach(counter => observer.observe(counter));
+
+            // --- RENDER SIMULATOR MINIGAME LOGIC ---
+            const renderBtn = document.getElementById('renderBtn');
+            const progressBar = document.getElementById('render-progress');
+            const timeDisplay = document.getElementById('time-left');
+            const gameResult = document.getElementById('gameResult');
+            
+            let clicks = 0;
+            let maxClicks = 40; // Butuh 40 klik buat menang
+            let timeLeft = 10;
+            let gameActive = false;
+            let gameTimer;
+
+            renderBtn.addEventListener('click', () => {
+                if (!gameActive && clicks === 0) {
+                    // Mulai Game
+                    gameActive = true;
+                    gameResult.innerText = "RENDERING...";
+                    gameResult.style.color = "var(--text-color)";
+                    
+                    gameTimer = setInterval(() => {
+                        timeLeft--;
+                        timeDisplay.innerText = timeLeft;
+                        
+                        if (timeLeft <= 0) {
+                            clearInterval(gameTimer);
+                            gameActive = false;
+                            if (clicks < maxClicks) {
+                                gameResult.innerText = "DEADLINE MISSED! KLIEN NGAMUK 💀";
+                                gameResult.style.color = "red";
+                            }
+                            setTimeout(resetGame, 3000); // Reset otomatis setelah 3 detik
+                        }
+                    }, 1000);
+                }
+
+                if (gameActive) {
+                    clicks++;
+                    let progress = Math.min((clicks / maxClicks) * 100, 100);
+                    progressBar.style.width = progress + '%';
+                    progressBar.innerText = Math.floor(progress) + '%';
+
+                    if (clicks >= maxClicks) {
+                        clearInterval(gameTimer);
+                        gameActive = false;
+                        gameResult.innerText = "PROJECT SAVED! CAIR CUAN 💸🎉";
+                        gameResult.style.color = "var(--pink)";
+                        setTimeout(resetGame, 4000);
+                    }
+                }
+            });
+
+            function resetGame() {
+                clicks = 0;
+                timeLeft = 10;
+                timeDisplay.innerText = timeLeft;
+                progressBar.style.width = '0%';
+                progressBar.innerText = '0%';
+                gameResult.innerText = "";
+            }
+
+            // --- DYNAMIC ISLAND & SPARKLE TRACKING LOGIC ---
+            const dynNav = document.getElementById('dynamicNavbar');
+            const sparkle = document.getElementById('trackingSparkle');
+            let isCollapsed = false;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    dynNav.classList.add('collapsed');
+                    isCollapsed = true;
+                } else {
+                    dynNav.classList.remove('collapsed');
+                    isCollapsed = false;
+                    sparkle.style.transform = `translate(0px, 0px)`; 
+                }
+            });
+
+            dynNav.addEventListener('click', () => {
+                if (isCollapsed) window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isCollapsed) {
+                    const rect = dynNav.getBoundingClientRect();
+                    const navCenterX = rect.left + rect.width / 2;
+                    const navCenterY = rect.top + rect.height / 2;
+                    
+                    const distX = e.clientX - navCenterX;
+                    const distY = e.clientY - navCenterY;
+                    const maxMove = 12; 
+                    
+                    const moveX = (distX / (window.innerWidth / 2)) * maxMove;
+                    const moveY = (distY / (window.innerHeight / 2)) * maxMove;
+                    
+                    sparkle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                }
+            });
+
+            // --- DARK MODE TOGGLE LOGIC ---
+            const themeBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.classList.replace('ph-sun', 'ph-moon');
+            }
+
+            themeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    themeIcon.classList.replace('ph-sun', 'ph-moon');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.classList.replace('ph-moon', 'ph-sun');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

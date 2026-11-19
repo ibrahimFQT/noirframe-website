@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP - NOIRFRAME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+
+    <nav id="navbar">
+        <div class="nav-side left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+        </div>
+        
+        <div class="logo-container">
+            <a href="index.html" class="logo-text">noirframe</a>
+            <svg class="sparkle-icon" id="sparkleEye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+
+        <div class="nav-side right">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a> 
+        </div>
+    </nav>
+
+    <!-- FLOATING CART BUTTON -->
+    <button class="floating-cart" id="cartToggleBtn">
+        <i class="ph ph-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>YOUR CART</h2>
+            <button id="closeCartBtn" class="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalPrice">Rp 0</span>
+            </div>
+            <a href="#" class="cta-btn magnetic" style="width: 100%; text-align: center; padding: 15px; font-size: 1.2rem; display: block;">Checkout (WhatsApp)</a>
+        </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
+    <!-- LANGSUNG KE PRICING / SERVICES -->
+    <section class="pricing-section" style="padding-top: 150px;">
+        <h2 class="section-title reveal-text">DESIGN SERVICES</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card reveal-text">
+                <h3>Basic</h3>
+                <div class="pricing-price">Rp 150.000</div>
+                <ul>
+                    <li>1 Desain Poster</li>
+                    <li>2x Revisi Minor</li>
+                    <li>File JPG/PNG</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Basic" data-price="150000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Add to Cart</button>
+            </div>
+            <div class="pricing-card popular reveal-text">
+                <div class="popular-badge">Best Value</div>
+                <h3>Pro</h3>
+                <div class="pricing-price">Rp 300.000</div>
+                <ul>
+                    <li>3 Desain Poster</li>
+                    <li>Unlimited Revisi</li>
+                    <li>File JPG/PNG/PDF</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Pro" data-price="300000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Add to Cart</button>
+            </div>
+            <div class="pricing-card reveal-text">
+                <h3>Ultimate</h3>
+                <div class="pricing-price">Rp 500.000</div>
+                <ul>
+                    <li>5 Desain Poster</li>
+                    <li>Unlimited Revisi</li>
+                    <li>File Mentah (PSD/AI)</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Ultimate" data-price="500000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MINIGAME SCRATCH TO WIN (DENGAN BACKGROUND PARTIKEL) -->
+    <section class="minigame-section">
+        <!-- Canvas buat partikel background -->
+        <canvas id="scratchBgCanvas" class="hero-canvas"></canvas>
+        
+        <div class="minigame-content reveal-text">
+            <h2>LUCKY SCRATCH</h2>
+            <p>Gosok area di bawah pakai kursor buat dapetin kode promo rahasia!</p>
+            <div class="scratch-wrapper">
+                <div class="scratch-secret">PROMO: NOIR20</div>
+                <canvas id="scratchCanvas" width="300" height="150"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-container">
+            <div class="marquee-content" id="marqueeText">EXCLUSIVE MERCHANDISE • READY TO SHIP • NOIRFRAME ORIGINALS • EXCLUSIVE MERCHANDISE • READY TO SHIP • NOIRFRAME ORIGINALS • EXCLUSIVE MERCHANDISE • READY TO SHIP • NOIRFRAME ORIGINALS • </div>
+        </div>
+    </div>
+
+    <section class="highlights" style="max-width: 1200px;">
+        <h2 class="section-title reveal-text">EXCLUSIVE MERCHANDISE</h2>
+        <div class="grid-cards">
+            <div class="card tilt reveal-text">
+                <div class="card-image" style="background-image: url('assets/acrypop.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="card-content">
+                    <h3>Acry Pop Keychain</h3>
+                    <p>Custom pastel keychains with premium glossy finish. Cute, soft, and uniquely yours.</p>
+                    <h4 style="color: var(--pink); font-size: 1.8rem; margin-top: 15px; font-family: 'Anton', sans-serif; letter-spacing: 1px;">Rp 25.000</h4>
+                    <button class="pricing-btn add-to-cart-btn" data-name="Acry Pop Keychain" data-price="25000" data-image="assets/acrypop.jpg" style="margin-top: 25px; width: 100%; cursor: none;">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card tilt reveal-text">
+                <div class="card-image" style="background-image: url('assets/keychain.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="card-content">
+                    <h3>Stell Pop Keychain</h3>
+                    <p>Metallic, edgy, and streetwear-inspired merchandise. Make a bold statement.</p>
+                    <h4 style="color: var(--pink); font-size: 1.8rem; margin-top: 15px; font-family: 'Anton', sans-serif; letter-spacing: 1px;">Rp 45.000</h4>
+                    <button class="pricing-btn add-to-cart-btn" data-name="Stell Pop Keychain" data-price="45000" data-image="assets/keychain.jpg" style="margin-top: 25px; width: 100%; cursor: none;">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card tilt reveal-text">
+                <div class="card-image" style="background-image: url('assets/poster.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="card-content">
+                    <h3>Noir Original Poster</h3>
+                    <p>Brutalist & Cyberpunk custom designs. High resolution, printed on premium paper.</p>
+                    <h4 style="color: var(--pink); font-size: 1.8rem; margin-top: 15px; font-family: 'Anton', sans-serif; letter-spacing: 1px;">Rp 75.000</h4>
+                    <button class="pricing-btn add-to-cart-btn" data-name="Noir Original Poster" data-price="75000" data-image="assets/poster.jpg" style="margin-top: 25px; width: 100%; cursor: none;">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="margin-top: 50px;">
+        <div class="footer-content">
+            <p>&copy; 2026 NOIRFRAME. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#">Instagram</a>
+                <a href="#">WhatsApp</a>
+                <a href="#">Behance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

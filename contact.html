@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT & COLLAB - NOIRFRAME</title>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Sesuaikan path folder ini dengan yang ada di index.html -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+
+    <!-- NAVBAR PILL -->
+    <nav id="navbar">
+        <div class="nav-side left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+        </div>
+        
+        <div class="logo-container">
+            <a href="index.html" class="logo-text">noirframe</a>
+            <svg class="sparkle-icon" id="sparkleEye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+
+        <div class="nav-side right">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link" style="color: var(--pink);">Contact</a> 
+        </div>
+    </nav>
+
+    <!-- FLOATING CART & THEME TOGGLE -->
+    <button class="floating-cart" id="cartToggleBtn" aria-label="Buka Keranjang">
+        <i class="ph ph-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Ganti Tema">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <!-- CART SIDEBAR POP-UP -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>YOUR CART</h2>
+            <button class="close-cart" id="closeCartBtn">×</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalPrice">Rp 0</span>
+            </div>
+            <a href="#" class="cta-btn" style="width: 100%; justify-content: center; padding: 18px; font-size: 1.2rem;">CHECKOUT (WHATSAPP)</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTACT (2 SISI: COLLAB & PUBLIC COMMENTS) -->
+    <section class="contact-section">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
+        <div class="hero-bg-logo"><span class="bg-logo-text">noirframe</span></div>
+        <div class="hero-bg-text">NOIRFRAME</div>
+
+        <div class="contact-wrapper reveal-text">
+            <h1 class="hero-title" style="font-size: clamp(3.5rem, 8vw, 6.5rem); margin-bottom: 10px;">
+                COLLAB OR <span class="highlight-text">TALK SHIT.</span>
+            </h1>
+            <p class="hero-subtitle" style="margin: 0 auto 50px;">
+                Pilih jalurmu: ajak kerja sama bisnis di sebelah kiri, atau ninggalin komentar & review sebagai pelanggan di sebelah kanan.
+            </p>
+
+            <!-- GRID DUA SISI -->
+            <div class="contact-grid">
+                
+                <!-- SISI KIRI: KHUSUS COLLAB / PROJECT -->
+                <div class="contact-glass-card tilt">
+                    <div class="card-role-badge">FOR BRANDS & CREATORS 💸</div>
+                    <h2 class="card-side-title">COLLAB & PROJECTS</h2>
+                    <p class="card-side-desc">Punya proyek desain gila, custom merch, atau mau ngajak kolaborasi brand? Masuk sini.</p>
+
+                    <div id="formFeedback" style="display: none; text-align: center; padding: 40px 10px;"></div>
+
+                    <form id="contactForm">
+                        <div class="nf-form-group">
+                            <label for="name">NAMA BRAND / AGENCY</label>
+                            <input type="text" id="name" class="nf-input" placeholder="Contoh: Studio X / Rara" required>
+                        </div>
+
+                        <div class="nf-form-group">
+                            <label for="contactInfo">WHATSAPP / EMAIL AKTIF</label>
+                            <input type="text" id="contactInfo" class="nf-input" placeholder="0812xxxx atau nama@brand.com" required>
+                        </div>
+
+                        <div class="nf-form-group">
+                            <label for="topic">JENIS KOLABORASI</label>
+                            <select id="topic" class="nf-input" required>
+                                <option value="" disabled selected>Pilih jenis collab...</option>
+                                <option value="branding">Visual Identity & Branding 🎨</option>
+                                <option value="merch">Custom Poster / Merch Drop 👕</option>
+                                <option value="web">Interactive Web Design 💻</option>
+                                <option value="campaign">Full Chaos Campaign 🔥</option>
+                            </select>
+                        </div>
+
+                        <div class="nf-form-group">
+                            <label for="messageInput">BRIEF SINGKAT & ESTIMASI BUDGET</label>
+                            <textarea id="messageInput" class="nf-input" placeholder="Ceritain konsep gila yang mau kita eksekusi..." maxlength="500" required></textarea>
+                            <div class="nf-char-count" id="charCount">0/500 (Masih kosong bre, ayo ketik konsepnya!)</div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="cta-btn magnetic" style="width: 100%; justify-content: center; padding: 18px; font-size: 1.25rem;">
+                            AJUKAN COLLAB ✦
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SISI KANAN: KHUSUS PELANGGAN BIASA (PUBLIC COMMENT WALL) -->
+                <div class="contact-glass-card tilt comment-side-card">
+                    <div>
+                        <div class="card-role-badge badge-outline">FOR CUSTOMERS & FANS 💬</div>
+                        <h2 class="card-side-title">PUBLIC WALL & KOMEN</h2>
+                        <p class="card-side-desc">Pelanggan biasa yang mau kasih review, request katalog baru, atau sekadar numpang lewat? Tulis komentar di bawah!</p>
+
+                        <form id="commentForm" class="comment-form-box">
+                            <div class="comment-row-inputs">
+                                <input type="text" id="commentName" class="nf-input" placeholder="Nama / @username" maxlength="25" required>
+                                <select id="commentVibe" class="nf-input">
+                                    <option value="🔥 Menyala">🔥 Menyala</option>
+                                    <option value="💖 Estetik">💖 Estetik</option>
+                                    <option value="💀 Nagih">💀 Nagih</option>
+                                    <option value="☕ Kopi Dulu">☕ Kopi Dulu</option>
+                                </select>
+                            </div>
+                            <div class="comment-submit-row">
+                                <input type="text" id="commentText" class="nf-input" placeholder="Ketik komentar atau review lu di sini..." maxlength="160" required>
+                                <button type="submit" class="comment-post-btn magnetic">POST ✦</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- LIVE FEED KOMENTAR PELANGGAN -->
+                    <div class="comment-wall-wrapper">
+                        <div class="comment-wall-header">
+                            <span>LATEST VIBES</span>
+                            <span id="commentTotalBadge">3 KOMENTAR</span>
+                        </div>
+                        <div class="comment-wall" id="commentWall">
+                            <!-- Komentar dirender via JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE RUNNING TEXT (Otomatis efek lompat huruf dari script.js) -->
+    <div class="marquee-wrapper">
+        <div class="marquee-container">
+            <div class="marquee-content" id="marqueeText">
+                ✦ NOIRFRAME STUDIO ✦ OPEN FOR COLLAB &amp; CHAOS ✦ DROP YOUR COMMENTS ✦ NO REVISIONS AFTER MIDNIGHT ✦ NOIRFRAME STUDIO ✦ OPEN FOR COLLAB &amp; CHAOS ✦ DROP YOUR COMMENTS ✦ NO REVISIONS AFTER MIDNIGHT ✦
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 NOIRFRAME. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#">INSTAGRAM</a>
+                <a href="#">BEHANCE</a>
+                <a href="#">WHATSAPP</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sesuaikan path folder ini dengan yang ada di index.html -->
+    <script src="js/script.js"></script>
+</body>
+</html>

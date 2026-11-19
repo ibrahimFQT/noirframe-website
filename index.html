@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIRFRAME - Custom Poster & Visual Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+
+    <nav id="navbar">
+        <div class="nav-side left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link">Shop</a>
+        </div>
+        
+        <div class="logo-container">
+            <a href="index.html" class="logo-text">noirframe</a>
+            <svg class="sparkle-icon" id="sparkleEye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+            </svg>
+        </div>
+
+        <div class="nav-side right">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a> 
+        </div>
+    </nav>
+
+    <!-- FLOATING CART BUTTON -->
+    <button class="floating-cart" id="cartToggleBtn">
+        <i class="ph ph-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>YOUR CART</h2>
+            <button id="closeCartBtn" class="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalPrice">Rp 0</span>
+            </div>
+            <a href="#" class="cta-btn magnetic" style="width: 100%; text-align: center; padding: 15px; font-size: 1.2rem; display: block;">Checkout (WhatsApp)</a>
+        </div>
+    </div>
+
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
+    <header class="hero">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
+        <div class="hero-bg-text">NOIRFRAME</div>
+        <div class="hero-bg-logo">
+            <span class="bg-logo-text">noirframe</span>
+        </div>
+        <h1 class="hero-title">UNLEASH<br><span class="highlight-text">YOUR VISION</span></h1>
+        <p class="hero-subtitle">Stay Tuned. Custom posters, keychains & merch.</p>
+        <a href="shop.html" class="hero-btn magnetic" id="magneticBtn">Explore Collection</a>
+    </header>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-container">
+            <div class="marquee-content" id="marqueeText">CUSTOM POSTER • KEYCHAINS • MERCHANDISE • NOIRFRAME • CUSTOM POSTER • KEYCHAINS • MERCHANDISE • NOIRFRAME • CUSTOM POSTER • KEYCHAINS • MERCHANDISE • NOIRFRAME • </div>
+        </div>
+    </div>
+
+    <section class="about-strip reveal-text">
+        <h2>KAMI MENGUBAH IDE LIAR MENJADI <span class="highlight-text">VISUAL YANG MEMUKAU.</span></h2>
+    </section>
+
+    <section id="what-we-do" class="section-padding">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <h2 class="section-title reveal-text">WHAT WE DO</h2>
+        <div class="bento-grid">
+            <div class="bento-item bento-1 tilt reveal-text">
+                <i class="ph ph-paint-brush bento-icon"></i>
+                <div class="bento-content">
+                    <h3>Custom Posters</h3>
+                    <p>Desain poster eksklusif yang dibuat khusus sesuai kebutuhan dan identitas brand kamu.</p>
+                </div>
+            </div>
+            <div class="bento-item bento-2 tilt reveal-text">
+                <i class="ph ph-lightning bento-icon"></i>
+                <div class="bento-content">
+                    <h3>Brand Identity</h3>
+                    <p>Membangun visual yang kuat agar bisnis kamu menonjol dari kompetitor.</p>
+                </div>
+            </div>
+            <div class="bento-item bento-3 tilt reveal-text">
+                <i class="ph ph-key bento-icon"></i>
+                <div class="bento-content">
+                    <h3>Merchandise</h3>
+                    <p>Dari keychain akrilik hingga apparel. Ide liar jadi produk fisik.</p>
+                </div>
+            </div>
+            <div class="bento-item bento-4 tilt reveal-text">
+                <i class="ph ph-printer bento-icon"></i>
+                <div class="bento-content">
+                    <h3>Print Ready</h3>
+                    <p>File resolusi tinggi, siap cetak ke media apapun tanpa pecah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <h2 class="section-title reveal-text">PRICING PLANS</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card reveal-text">
+                <h3>Basic</h3>
+                <div class="pricing-price">Rp 150K</div>
+                <ul>
+                    <li>1 Desain Poster</li>
+                    <li>2x Revisi Minor</li>
+                    <li>File JPG/PNG</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Basic" data-price="150000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Pilih Paket</button>
+            </div>
+            <div class="pricing-card popular reveal-text">
+                <div class="popular-badge">Best Value</div>
+                <h3>Pro</h3>
+                <div class="pricing-price">Rp 300K</div>
+                <ul>
+                    <li>3 Desain Poster</li>
+                    <li>Unlimited Revisi</li>
+                    <li>File JPG/PNG/PDF</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Pro" data-price="300000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Pilih Paket</button>
+            </div>
+            <div class="pricing-card reveal-text">
+                <h3>Ultimate</h3>
+                <div class="pricing-price">Rp 500K</div>
+                <ul>
+                    <li>5 Desain Poster</li>
+                    <li>Unlimited Revisi</li>
+                    <li>File Mentah (PSD/AI)</li>
+                </ul>
+                <button class="pricing-btn add-to-cart-btn" data-name="Ultimate" data-price="500000" data-image="assets/poster.jpg" style="width: 100%; cursor: none;">Pilih Paket</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <canvas id="ctaCanvas" class="cta-canvas"></canvas>
+        <div class="cta-bg-text">NOIRFRAME</div>
+        <div class="cta-content reveal-text">
+            <h2>READY TO START?</h2>
+            <p>Punya ide liar? Mari kita wujudkan jadi visual yang gak terlupakan.</p>
+            <a href="shop.html" class="cta-btn magnetic">Order Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 NOIRFRAME. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#">Instagram</a>
+                <a href="#">WhatsApp</a>
+                <a href="#">Behance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
